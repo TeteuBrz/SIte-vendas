@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="QuoteNudge — Never lose a sale because you forgot to follow up. Smart commercial quote tracking and follow-up assistant." />
+  <title>QuoteNudge — Never lose a sale because you forgot to follow up</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="appShell" class="app-shell">
+    <!-- Mobile Backdrop -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+
+    <!-- Fixed Collapsible Sidebar -->
+    <aside id="sidebar" class="sidebar" aria-label="Primary Navigation">
+      <div class="sidebar-header">
+        <a href="#overview" class="brand-logo" data-route="overview">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="34" height="34" fill="none">
+              <rect width="40" height="40" rx="10" fill="#16A36A"/>
+              <path d="M12 13.5C12 11.567 13.567 10 15.5 10H24.5C26.433 10 28 11.567 28 13.5V21.5C28 23.433 26.433 25 24.5 25H18.5L13.5 29.5V25H15.5C13.567 25 12 23.433 12 21.5V13.5Z" fill="#FFFFFF"/>
+              <path d="M16.5 17.5L19 20L24 15" stroke="#16A36A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="logo-text-wrap">
+            <span class="logo-title">QuoteNudge</span>
+            <span class="logo-tagline">Sales Follow-up OS</span>
+          </span>
+        </a>
+
+        <button type="button" id="btnCollapseSidebar" class="icon-btn sidebar-collapse-btn" title="Collapse sidebar" aria-label="Collapse sidebar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item active" data-route="overview" title="Overview — Pipeline & Next Actions">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            </svg>
+          </span>
+          <span class="nav-content">
+            <span class="nav-label">Overview</span>
+            <span class="nav-desc">Pipeline &amp; priorities</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item" data-route="followups" title="Follow-ups — Daily Contact Queue">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </span>
+          <span class="nav-content">
+            <span class="nav-label">Follow-ups</span>
+            <span class="nav-desc">Overdue &amp; today's queue</span>
+          </span>
+          <span id="navFollowupBadge" class="nav-badge" hidden>0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-route="quotes" title="Quotes — Proposals & Negotiations">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+          </span>
+          <span class="nav-content">
+            <span class="nav-label">Quotes</span>
+            <span class="nav-desc">Manage all proposals</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item" data-route="customers" title="Customers — Client Directory">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </span>
+          <span class="nav-content">
+            <span class="nav-label">Customers</span>
+            <span class="nav-desc">Clients &amp; deal history</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item" data-route="templates" title="Templates — Ready-to-send Scripts">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </span>
+          <span class="nav-content">
+            <span class="nav-label">Templates</span>
+            <span class="nav-desc">Follow-up scripts</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item" data-route="reports" title="Reports — Sales & Conversion Analytics">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </span>
+          <span class="nav-content">
+            <span class="nav-label">Reports</span>
+            <span class="nav-desc">Conversion &amp; loss insights</span>
+          </span>
+        </button>
+
+        <button type="button" class="nav-item" data-route="settings" title="Settings — Preferences & Backup">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </span>
+          <span class="nav-content">
+            <span class="nav-label">Settings</span>
+            <span class="nav-desc">Workspace &amp; data backup</span>
+          </span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-motto">
+          <span class="motto-dot" aria-hidden="true"></span>
+          <p>"Never lose a sale because you forgot to follow up."</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <!-- Top Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="btnMobileMenu" class="icon-btn mobile-menu-btn" aria-label="Open navigation menu">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <div class="page-heading">
+            <h1 id="currentPageTitle">Overview</h1>
+            <p id="currentPageSubtitle" class="page-subtitle">Your commercial command center</p>
+          </div>
+        </div>
+
+        <!-- Smart Global Search -->
+        <div class="smart-search-wrap">
+          <div class="smart-search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="search"
+              id="globalSearchInput"
+              placeholder="Smart search: client, quote #, amount, status..."
+              autocomplete="off"
+              aria-label="Smart global search"
+            />
+            <kbd class="search-kbd">/</kbd>
+          </div>
+          <div id="smartSearchResults" class="smart-search-dropdown" hidden></div>
+        </div>
+
+        <!-- Topbar Actions -->
+        <div class="topbar-actions">
+          <button type="button" id="btnHeaderNewQuote" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>New Quote</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button type="button" id="btnThemeToggle" class="icon-btn" title="Switch Light / Dark Theme" aria-label="Toggle color theme">
+            <svg id="iconMoon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg id="iconSun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden>
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+
+          <!-- Notification Center -->
+          <div class="dropdown-anchor">
+            <button type="button" id="btnNotifications" class="icon-btn" title="Notification Center" aria-label="Open notifications">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span id="notifDot" class="notif-badge" hidden>0</span>
+            </button>
+
+            <div id="notifDropdown" class="popover-panel notif-panel" hidden>
+              <div class="popover-header">
+                <strong>Action Alerts</strong>
+                <span id="notifSummaryText" class="text-muted text-xs">0 alerts</span>
+              </div>
+              <div id="notifList" class="popover-body"></div>
+            </div>
+          </div>
+
+          <!-- Profile Menu -->
+          <div class="dropdown-anchor">
+            <button type="button" id="btnProfileMenu" class="profile-trigger" title="Account & Workspace" aria-label="Open profile menu">
+              <span id="headerAvatar" class="avatar-circle">QN</span>
+              <span class="profile-meta">
+                <span id="headerUserName" class="profile-name">Alex Morgan</span>
+                <span id="headerCompanyName" class="profile-company">Studio Craft</span>
+              </span>
+            </button>
+
+            <div id="profileDropdown" class="popover-panel profile-panel" hidden>
+              <div class="popover-header">
+                <div>
+                  <strong id="menuUserName">Alex Morgan</strong>
+                  <div id="menuUserEmail" class="text-muted text-xs">alex@studiocraft.io</div>
+                </div>
+              </div>
+              <div class="popover-menu">
+                <button type="button" class="popover-menu-item" data-goto="settings">Workspace Settings</button>
+                <button type="button" class="popover-menu-item" id="btnMenuLoadDemo">Load Demo Data</button>
+                <button type="button" class="popover-menu-item" id="btnMenuExportJson">Export JSON Backup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic View Container -->
+      <main id="viewContainer" class="view-container" tabindex="-1"></main>
+    </div>
+
+    <!-- Floating Quick Add Button (Mobile & Quick Access) -->
+    <button type="button" id="btnFloatingQuickAdd" class="fab-quick-add" title="Quick Add Quote" aria-label="Quick Add Quote">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ========================================================================
+       SHARED MODALS
+       ======================================================================== -->
+
+  <!-- 1. Quote Create / Edit Modal -->
+  <div id="quoteModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="quoteModalTitle" hidden>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <h2 id="quoteModalTitle">New Quote</h2>
+          <p class="text-muted text-xs">Organize proposal details and schedule your next follow-up</p>
+        </div>
+        <button type="button" class="icon-btn modal-close" data-close-modal="quoteModal" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="quoteForm" novalidate>
+        <input type="hidden" id="qId" />
+        <div class="modal-body form-sections">
+          <!-- Section 1: General Info -->
+          <fieldset class="form-section">
+            <legend>1. General Information</legend>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="qTitle">Quote Title <span class="req">*</span></label>
+                <input type="text" id="qTitle" class="form-control" placeholder="e.g., Website Redesign & SEO Package" required />
+                <small class="field-error" id="err_qTitle"></small>
+              </div>
+              <div class="form-group">
+                <label for="qNumber">Quote Number</label>
+                <input type="text" id="qNumber" class="form-control" readonly />
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <div class="label-with-action">
+                  <label for="qCustomerId">Customer <span class="req">*</span></label>
+                  <button type="button" id="btnInlineNewCustomer" class="link-btn text-xs">+ Quick New Customer</button>
+                </div>
+                <select id="qCustomerId" class="form-control" required></select>
+                <small class="field-error" id="err_qCustomerId"></small>
+              </div>
+
+              <div class="form-group">
+                <label for="qServiceCategory">Service Category</label>
+                <select id="qServiceCategory" class="form-control">
+                  <option value="Consulting">Consulting</option>
+                  <option value="Design & Branding">Design &amp; Branding</option>
+                  <option value="Web & Software">Web &amp; Software</option>
+                  <option value="Marketing & Growth">Marketing &amp; Growth</option>
+                  <option value="Maintenance & Support">Maintenance &amp; Support</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="qDescription">Scope &amp; Description <span class="req">*</span></label>
+              <textarea id="qDescription" class="form-control" rows="3" placeholder="Summarize deliverables, timeline, and key value points..." required></textarea>
+              <small class="field-error" id="err_qDescription"></small>
+            </div>
+          </fieldset>
+
+          <!-- Section 2: Values -->
+          <fieldset class="form-section">
+            <legend>2. Commercial Values</legend>
+            <div class="form-grid-4">
+              <div class="form-group">
+                <label for="qCurrency">Currency</label>
+                <select id="qCurrency" class="form-control">
+                  <option value="USD">USD ($)</option>
+                  <option value="BRL">BRL (R$)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="GBP">GBP (£)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="qAmount">Amount <span class="req">*</span></label>
+                <input type="number" id="qAmount" class="form-control" min="0" step="0.01" placeholder="2500.00" required />
+                <small class="field-error" id="err_qAmount"></small>
+              </div>
+
+              <div class="form-group">
+                <label for="qDiscount">Discount (Optional)</label>
+                <input type="number" id="qDiscount" class="form-control" min="0" step="0.01" value="0" />
+              </div>
+
+              <div class="form-group">
+                <label for="qTotalDisplay">Total Amount</label>
+                <input type="text" id="qTotalDisplay" class="form-control total-highlight" readonly />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Section 3: Dates -->
+          <fieldset class="form-section">
+            <legend>3. Timeline &amp; Follow-up Schedule</legend>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="qCreatedDate">Creation Date <span class="req">*</span></label>
+                <input type="date" id="qCreatedDate" class="form-control" required />
+                <small class="field-error" id="err_qCreatedDate"></small>
+              </div>
+
+              <div class="form-group">
+                <label for="qExpirationDate">Expiration Date</label>
+                <input type="date" id="qExpirationDate" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="qFollowUpDate">Next Follow-up Date <span class="req">*</span></label>
+                <input type="date" id="qFollowUpDate" class="form-control" required />
+                <small class="field-error" id="err_qFollowUpDate"></small>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Section 4: Tracking -->
+          <fieldset class="form-section">
+            <legend>4. Pipeline Status &amp; Priority</legend>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="qStatus">Status</label>
+                <select id="qStatus" class="form-control">
+                  <option value="Draft">Draft</option>
+                  <option value="Sent" selected>Sent</option>
+                  <option value="Awaiting Response">Awaiting Response</option>
+                  <option value="Negotiating">Negotiating</option>
+                  <option value="Won">Won</option>
+                  <option value="Lost">Lost</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="qPriority">Priority</label>
+                <select id="qPriority" class="form-control">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="qNotes">Internal Strategy Notes</label>
+              <textarea id="qNotes" class="form-control" rows="2" placeholder="Decision maker preferences, objections, or next negotiation step..."></textarea>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="quoteModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Quote</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Quote Details & Quick Message Modal -->
+  <div id="quoteDetailModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="detailQuoteTitle" hidden>
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header">
+        <div>
+          <div class="detail-badges-row" id="detailHeaderBadges"></div>
+          <h2 id="detailQuoteTitle">Quote Details</h2>
+        </div>
+        <button type="button" class="icon-btn modal-close" data-close-modal="quoteDetailModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div id="quoteDetailBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- 3. Customer Create / Edit Modal -->
+  <div id="customerModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="customerModalTitle" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="customerModalTitle">New Customer</h2>
+        <button type="button" class="icon-btn modal-close" data-close-modal="customerModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="customerForm" novalidate>
+        <input type="hidden" id="cId" />
+        <div class="modal-body">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="cName">Full Name <span class="req">*</span></label>
+              <input type="text" id="cName" class="form-control" placeholder="John Smith" required />
+              <small class="field-error" id="err_cName"></small>
+            </div>
+            <div class="form-group">
+              <label for="cCompany">Company</label>
+              <input type="text" id="cCompany" class="form-control" placeholder="Acme Corp" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="cEmail">Email</label>
+              <input type="email" id="cEmail" class="form-control" placeholder="john@acmecorp.com" />
+              <small class="field-error" id="err_cEmail"></small>
+            </div>
+            <div class="form-group">
+              <label for="cPhone">WhatsApp / Phone (with country code)</label>
+              <input type="tel" id="cPhone" class="form-control" placeholder="+1 555 234 5678" />
+              <small class="help-text">Include international code (e.g., +1, +55, +44) for direct WhatsApp.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cCountry">Country</label>
+            <input type="text" id="cCountry" class="form-control" placeholder="United States" />
+          </div>
+
+          <div class="form-group">
+            <label for="cNotes">Customer Notes</label>
+            <textarea id="cNotes" class="form-control" rows="3" placeholder="Preferred communication channel, timezone, decision process..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="customerModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Customer Detail Modal -->
+  <div id="customerDetailModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="customerDetailTitle" hidden>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h2 id="customerDetailTitle">Customer Profile</h2>
+        <button type="button" class="icon-btn modal-close" data-close-modal="customerDetailModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div id="customerDetailBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- 5. Mark as Contacted Modal -->
+  <div id="contactedModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="contactedModalTitle" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="contactedModalTitle">How did the customer respond?</h2>
+        <button type="button" class="icon-btn modal-close" data-close-modal="contactedModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="contactedForm">
+        <input type="hidden" id="contactQuoteId" />
+        <div class="modal-body">
+          <p id="contactedSubtitle" class="text-muted mb-3"></p>
+
+          <div class="form-group">
+            <label for="contactOutcome">Customer Response <span class="req">*</span></label>
+            <select id="contactOutcome" class="form-control" required>
+              <option value="No response">No response</option>
+              <option value="Interested">Interested</option>
+              <option value="Requested changes">Requested changes</option>
+              <option value="Negotiating">Negotiating</option>
+              <option value="Approved">Approved (Mark as Won)</option>
+              <option value="Rejected">Rejected (Mark as Lost)</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="nextFollowupGroup">
+            <label for="contactNextDate">Schedule Next Follow-up</label>
+            <div class="quick-date-pills">
+              <button type="button" class="pill-btn" data-days-offset="1">+1 day</button>
+              <button type="button" class="pill-btn" data-days-offset="3">+3 days</button>
+              <button type="button" class="pill-btn" data-days-offset="7">+7 days</button>
+            </div>
+            <input type="date" id="contactNextDate" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="contactNote">Interaction Summary</label>
+            <textarea id="contactNote" class="form-control" rows="3" placeholder="What was discussed or sent?"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="contactedModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Log Contact</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. Lost Sale Reason Modal -->
+  <div id="lostReasonModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="lostModalTitle" hidden>
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h2 id="lostModalTitle">Record Lost Sale Insight</h2>
+        <button type="button" class="icon-btn modal-close" data-close-modal="lostReasonModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="lostReasonForm">
+        <input type="hidden" id="lostQuoteId" />
+        <div class="modal-body">
+          <p class="text-muted text-sm mb-3">Understanding why deals are lost helps improve future proposals.</p>
+          <div class="form-group">
+            <label for="lostReasonSelect">Primary Reason <span class="req">*</span></label>
+            <select id="lostReasonSelect" class="form-control" required>
+              <option value="Too Expensive">Too Expensive</option>
+              <option value="Chose a Competitor">Chose a Competitor</option>
+              <option value="No Response">No Response</option>
+              <option value="Project Cancelled">Project Cancelled</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lostReasonNote">Additional Context (Optional)</label>
+            <textarea id="lostReasonNote" class="form-control" rows="2" placeholder="Any feedback shared by the client?"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="lostReasonModal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Confirm Lost Quote</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. Template Create / Edit Modal -->
+  <div id="templateModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="templateModalTitle" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="templateModalTitle">New Message Template</h2>
+        <button type="button" class="icon-btn modal-close" data-close-modal="templateModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="templateForm" novalidate>
+        <input type="hidden" id="tId" />
+        <div class="modal-body">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="tName">Template Name <span class="req">*</span></label>
+              <input type="text" id="tName" class="form-control" placeholder="e.g., 3-Day Proposal Check-in" required />
+              <small class="field-error" id="err_tName"></small>
+            </div>
+            <div class="form-group">
+              <label for="tCategory">Category</label>
+              <select id="tCategory" class="form-control">
+                <option value="First Follow-up">First Follow-up</option>
+                <option value="Friendly Reminder">Friendly Reminder</option>
+                <option value="Checking the Proposal">Checking the Proposal</option>
+                <option value="Price Negotiation">Price Negotiation</option>
+                <option value="Last Follow-up">Last Follow-up</option>
+                <option value="Thank You">Thank You</option>
+                <option value="Quote Approved">Quote Approved</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="tLanguage">Language</label>
+              <select id="tLanguage" class="form-control">
+                <option value="EN">English (EN)</option>
+                <option value="PT">Português (PT)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="tSubject">Email Subject Line</label>
+              <input type="text" id="tSubject" class="form-control" placeholder="Following up on {{quote_title}}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Insert Dynamic Variable</label>
+            <div class="variable-chips" id="templateVariableChips">
+              <button type="button" class="chip-btn" data-var="{{customer_name}}">{{customer_name}}</button>
+              <button type="button" class="chip-btn" data-var="{{quote_title}}">{{quote_title}}</button>
+              <button type="button" class="chip-btn" data-var="{{quote_amount}}">{{quote_amount}}</button>
+              <button type="button" class="chip-btn" data-var="{{quote_number}}">{{quote_number}}</button>
+              <button type="button" class="chip-btn" data-var="{{expiration_date}}">{{expiration_date}}</button>
+              <button type="button" class="chip-btn" data-var="{{sender_company}}">{{sender_company}}</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tBody">Message Body <span class="req">*</span></label>
+            <textarea id="tBody" class="form-control" rows="5" required placeholder="Hi {{customer_name}}, I hope you're doing well!..."></textarea>
+            <small class="field-error" id="err_tBody"></small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="templateModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Template</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. Confirmation Dialog Modal -->
+  <div id="confirmDialogModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirmDialogTitle" hidden>
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h2 id="confirmDialogTitle">Confirm Action</h2>
+        <button type="button" class="icon-btn modal-close" data-close-modal="confirmDialogModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmDialogMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="confirmDialogModal">Cancel</button>
+        <button type="button" id="btnConfirmDialogYes" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. First-Time Onboarding Modal -->
+  <div id="onboardingModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <span class="badge badge-green">Welcome to QuoteNudge</span>
+          <h2 id="onboardingTitle" class="mt-1">Set up your sales assistant in 30 seconds</h2>
+        </div>
+        <button type="button" class="icon-btn modal-close" data-close-modal="onboardingModal" aria-label="Skip onboarding">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted text-sm mb-3">
+          "Never lose a sale because you forgot to follow up." Complete these 3 quick steps or load sample data to explore right away.
+        </p>
+
+        <div class="onboarding-steps">
+          <div class="onboarding-step">
+            <span class="step-num">1</span>
+            <div class="step-body">
+              <strong>Configure your company name</strong>
+              <div class="inline-step-form">
+                <input type="text" id="obCompanyInput" class="form-control" placeholder="e.g., Bright Pixel Studio" />
+                <button type="button" id="btnObSaveCompany" class="btn btn-secondary btn-sm">Save</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="onboarding-step">
+            <span class="step-num">2</span>
+            <div class="step-body">
+              <strong>Add your first customer</strong>
+              <p class="text-muted text-xs">Store their WhatsApp phone and email for 1-click follow-ups.</p>
+              <button type="button" id="btnObAddCustomer" class="btn btn-secondary btn-sm mt-1">+ Add Customer</button>
+            </div>
+          </div>
+
+          <div class="onboarding-step">
+            <span class="step-num">3</span>
+            <div class="step-body">
+              <strong>Create your first quote</strong>
+              <p class="text-muted text-xs">Set a follow-up date so QuoteNudge reminds you at the right moment.</p>
+              <button type="button" id="btnObAddQuote" class="btn btn-primary btn-sm mt-1">+ Create Quote</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-banner">
+          <div>
+            <strong>Want to see it in action first?</strong>
+            <p class="text-muted text-xs">Populate realistic quotes, overdue alerts, customers, and charts.</p>
+          </div>
+          <button type="button" id="btnObLoadDemo" class="btn btn-primary btn-sm">Load Demo Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Ordered Vanilla JS Modules (Compatible with file:// and HTTP) -->
+  <script src="js/storage.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/customers.js"></script>
+  <script src="js/followups.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
